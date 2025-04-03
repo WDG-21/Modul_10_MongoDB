@@ -12,6 +12,8 @@ function App() {
     const fileToUpload = e.target.files[0];
     setFile(fileToUpload);
     setPreview(URL.createObjectURL(fileToUpload));
+    setUploaded(null);
+    setError(null);
   };
 
   const handleSubmit = async (e) => {
@@ -24,6 +26,7 @@ function App() {
 
     try {
       setLoading(true);
+      setError(null);
 
       const res = await fetch('http://localhost:3000/file-upload', {
         method: 'POST',
@@ -31,11 +34,13 @@ function App() {
       });
 
       const data = await res.json();
+      if (!res.ok) throw new Error(data.message);
       setUploaded(data.filepath);
-      // console.log(data);
+      setPreview(null);
+      setFile(null);
     } catch (error) {
       console.log(error);
-      setError(error);
+      setError(error.message);
     } finally {
       setLoading(false);
     }
@@ -51,13 +56,19 @@ function App() {
       )}
       <form className='mx-auto w-76 border-2' onSubmit={handleSubmit}>
         <label className='cursor-pointer'>
-          <span>Select an image: </span>
-          <input type='file' name='my-file' onChange={handleChange} />
+          <span>Select an image:</span>
+          <input
+            type='file'
+            name='my-file'
+            onChange={handleChange}
+            className='file:bg-amber-600 file:py-2 file:px-1 file:rounded-lg w-full cursor-pointer file:cursor-pointer my-2'
+          />
         </label>
         <button disabled={loading} className='cursor-pointer disabled:cursor-not-allowed'>
           Upload
         </button>
       </form>
+      {error && <p className='text-red-500'>{error}</p>}
       {preview && (
         <>
           <h2>Preview Image</h2>
