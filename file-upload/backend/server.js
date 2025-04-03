@@ -15,12 +15,12 @@ app.get('/', (req, res) => {
 });
 
 app.post('/file-upload', upload.single('my-file'), (req, res) => {
-  const filepath = `${req.protocol}://${req.host}/${req.file.filename}`;
+  // const filepath = `${req.protocol}://${req.host}/${req.file.filename}`;
   // const filepath = path.join(`${req.protocol}://${req.host}`, req.file.filename);
 
-  // console.log(req.files);
+  // console.log(req.file);
 
-  res.json({ message: 'File upload successful', filepath });
+  res.json({ message: 'File upload successful', filepath: req.file.secure_url });
 });
 
 app.use((err, req, res, next) => {

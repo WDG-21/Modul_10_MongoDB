@@ -39,7 +39,7 @@ function App() {
       setPreview(null);
       setFile(null);
     } catch (error) {
-      console.log(error);
+      // console.log(error);
       setError(error.message);
     } finally {
       setLoading(false);
