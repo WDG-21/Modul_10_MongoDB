@@ -15,13 +15,13 @@ import Book from '../models/BookModel.js';
 
 const bookRouter = Router();
 
-// bookRouter.get('/', getAllBooks);
+bookRouter.get('/', getAllBooks);
 // bookRouter.get('/:id', getBookByID);
 // bookRouter.post('/', validate(BookSchema), createBook);
 // bookRouter.put('/:id', updateBookByID);
 // bookRouter.delete('/:id', deleteBookByID);
 
-bookRouter.get('/', getAll(Book));
+// bookRouter.get('/', getAll(Book));
 bookRouter.get('/:id', getOneByID(Book));
 bookRouter.post('/', validate(BookSchema), createOne(Book));
 bookRouter.put('/:id', updateOneByID(Book));

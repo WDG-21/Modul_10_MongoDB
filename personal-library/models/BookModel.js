@@ -26,5 +26,7 @@ const bookSchema = new Schema({
   },
 });
 
+bookSchema.index({ title: 'text', author: 'text', description: 'text', genre: 'text' });
+
 const Book = model('Book', bookSchema);
 export default Book;
